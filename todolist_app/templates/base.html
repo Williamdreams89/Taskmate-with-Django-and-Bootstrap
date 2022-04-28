@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta name="viewport" content="width=device=width, initial-scale=1">
+	<meta charset="utf-8">
+    {% block title %}{% endblock title %}
+	<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'my_styles.css' %}">
+	<script type="text/javascript" src="{% static 'bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+    <style>
+        .remove__alert{
+            visibility:hidden;
+            transition: 1s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}">Taskmate</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'todolist' %}">Todolist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                </ul>
+                {% if not user.is_authenticated %}
+                    <div class="form-inline my-2 my-lg-0">
+                        <a href="{% url 'login' %}">
+                            <button class="mr-sm-2 btn btn-primary" type="submit">Log In</button>
+                        </a>
+                        <a href="{% url 'register' %}">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="form-inline my-2 my-lg-0">
+                        <div class="mr-sm-2">Logged in as {{user.username|capfirst}}</div>
+                        <a href="{% url 'logout' %}">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </div>    
+    <div class="container">
+        {% block content %}{% endblock content %}
+    </div>
+    <script>
+        const alertClose = document.querySelector('.close');
+        const alertBox = document.querySelector('.alert');
+
+        if(alertClose){
+            alertClose.addEventListener('click', ()=>{
+                alertBox.classList.add('.remove__alert')
+            })
+        }
+    </script>
+</body>
+</html>

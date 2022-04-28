@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Taskmate|Edit Page</title>
+{% endblock title %}
+
+{% block content %}
+{% if task_obj.task_manager == request.user %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" class="form-control" name="task" value="{{task_obj.task}}">
+        <div class="row mt-3">
+            <div class="col-lg-4">
+                <label>Date</label>
+                <input type="date" class="form-control" name="task_date">
+            </div>
+            <div class="col-lg-4">
+                <label>Starts From</label>
+                <input type="time" class="form-control" name="starts_from">
+            </div>
+            <div class="col-lg-4">
+                <label>Ends At</label>
+                <input type="time" class="form-control" name="ends_at">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-dark mt-3">Add Task</button>
+    </form>
+{% else %}
+    <h2> Page Restricted...You cannot access this page!!!</h2>
+{% endif %}
+{% endblock content %}
+
+
